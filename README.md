@@ -1,3 +1,5 @@
+[![Playwright Tests](https://github.com/Markiel-ops/playwright-login-tests/actions/workflows/playwright.yml/badge.svg)](https://github.com/Markiel-ops/playwright-login-tests/actions/workflows/playwright.yml)
+
 # Playwright login Automation Tests
 
 ## Overview
