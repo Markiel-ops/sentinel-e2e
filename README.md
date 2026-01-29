@@ -2,56 +2,57 @@
 
 # Sentinel E2E Automation (Playwright)
 
-Production-grade end-to-end test automation framework for an SSO-based web application, built with **Playwright** and **GitHub Actions CI**.
+## Overview
 
-This project focuses on **stability, speed, and real-world auth handling**, not brittle UI scripting.
+This project demonstrates end-to-end (E2E) automation for a login flow using Playwright.
 
----
-
-##   Tech Stack
-- **Playwright** (JavaScript)
-- **Node.js**
-- **GitHub Actions** (CI)
-- **SSO-safe authentication** using `storageState`
+It was intentionally designed and implemented to showcase clean automation structure,
+Page Object Model usage, stable validations, and secure environment-based configuration
+for authentication workflows.
 
 ---
 
-##   Key Design Decisions
+## Tech Stack
 
-### SSO Authentication Strategy
-
-This application uses **Single Sign-On (SSO)**.  
-Because credential entry is handled by an external Identity Provider:
-
-- I do **NOT** test username/password form validation
-- I do **NOT** depend on unstable login UI selectors
-- I validate **routing, access control, and session state**
-- Authentication is handled once via `globalSetup`
-- Tests reuse a stored authenticated session (`storageState`)
-
-This approach aligns with common enterprise QA practices for testing SSO-based applications.
+- Playwright (TypeScript)
+- Node.js
+- Page Object Model (POM)
+- Environment-based configuration (`.env`)
 
 ---
 
-##  Test Types
+## Test Coverage
 
-### Smoke Tests
-- Fast, minimal checks
-- Validate the app loads correctly for authenticated users
-- Run on **every PR and push**
+The automation suite covers the core login flow of the application, including:
 
-## Run Tests Locally
+- User authentication
+- Page navigation and URL validation during login
+- Post-login state verification
+
+Additional authentication and post-login scenarios are intentionally archived
+to maintain a focused and stable active scope.
+
+---
+
+## Project Structure
+
+```text
+sentinel-e2e/
+├─ tests/
+│  ├─ login.spec.ts
+│  └─ _archive/
+│     └─ auth/
+├─ pages/
+│  └─ LoginPage.ts
+├─ .env.example
+├─ playwright.config.ts
+└─ README.md
+---
+
+## How to Run
 
 ```bash
 npm install
 npx playwright install
 npx playwright test
-```
-
-## Final Action
-
-```bash
-git add README.md
-git commit -m "docs: update README"
-git push
 ```
