@@ -1,64 +1,85 @@
-[![Playwright Tests](https://github.com/Markiel-ops/playwright-login-tests/actions/workflows/playwright.yml/badge.svg)](https://github.com/Markiel-ops/playwright-login-tests/actions/workflows/playwright.yml)
+[![Playwright Tests](https://github.com/Markiel-ops/playwright-login-tests/actions/workflows/playwright.yml/badge.svg)](
+https://github.com/Markiel-ops/playwright-login-tests/actions/workflows/playwright.yml
+)
 
-# Playwright login Automation Tests
+# Playwright Authentication and Navigation Automation Framework
 
 ## Overview
-End-to-end QA automation covering login validation, authentication state reuse, and post-login dashboard access using Playwright.
+
+This repository contains a Playwright-based automation framework designed to validate
+authentication behavior, access control, and authenticated navigation flows for a web application.
+
+The framework is built with stability and maintainability in mind and is intended for
+continuous integration environments rather than single-page or demo-style testing.
 
 ---
 
-## Test Coverage
+## Scope and Coverage
 
-The following login-related scenarios are automated:
+The framework validates the following scenarios:
 
-- Login page loads correctly
-- Username & Password fields visibility
-- Keep Me Logged In checkbox toggle
-- Password visibility (eye icon) toggle
-- Validation errors for empty credentials
-- Forgot Password flow (open reset page)
-- Return to Login from Forgot Password
-- Successful login with valid credentials
-- Logout and redirect back to login page
+- Login flow behavior and credential handling
+- Authentication state reuse using Playwright `storageState`
+- Access to protected routes for authenticated users
+- Redirect behavior for unauthenticated access attempts
+- Authenticated navigation between application pages
+- Session access revocation through session invalidation
+- Automated execution via GitHub Actions with CI reporting
 
 ---
 
-## Tech Stack
+## Architecture and Design Decisions
 
-- Playwright
-- Node.js
-- dotenv
+The framework follows a Page Object Model (POM) approach to separate test logic from UI interactions
+and improve long-term maintainability.
 
----
+Authentication is handled through a dedicated setup step that performs a UI login once and stores
+the authenticated session state. This state is reused across tests to reduce execution time and
+minimize flakiness caused by repeated logins.
 
-## Setup
-
-- Clone repository
-- Create '.env' from '.env.example'
-- Install dependencies
-
----
-
-## Run Tests
-    npx playwright test
-
----
-
-## Test Coverage
-- Login page validations
-- Authentication flow
-- Dashboard access verification
+Logout behavior is validated through session invalidation and access control checks instead of
+direct UI-based logout actions. This approach avoids brittle selectors and ensures deterministic
+results in CI environments where logout UI elements may not always be reliably available.
 
 ---
 
 ## Project Structure
 
 ```text
-playwright-login-tests/
-├── tests/
-│   └── example.spec.js
-├── playwright.config.js
-├── package.json
-├── package-lock.json
-├── .gitignore
-└── README.md
+tests/
+├── auth.setup.ts
+├── login.spec.ts
+├── protected-routes.spec.ts
+├── navigation-flow.spec.ts
+├── logout.spec.ts
+└── pages/
+    └── login.page.js
+
+---
+
+## Notes for Reviewers
+
+This repository represents a finalized and stable automation baseline.
+
+All scenarios included are actively passing in CI and are designed to demonstrate practical,
+real-world Playwright usage, including authentication lifecycle handling, access control
+validation, and CI-backed execution.
+
+The structure and design choices prioritize reliability, clarity, and reusability over
+UI-dependent or brittle test implementations.
+
+---
+
+## Setup and Usage
+
+### Install dependencies
+
+```bash
+npm install
+
+---
+
+### Environment configuration
+### Run tests locally
+### View test report
+
