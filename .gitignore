@@ -5,6 +5,7 @@ node_modules/
 test-results/
 playwright-report/
 playwright/
+storage/
 storageState.json
 
 # Env / secrets
@@ -18,4 +19,3 @@ auth.json
 
 # Logs
 *.log
-
