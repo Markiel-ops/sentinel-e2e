@@ -15,3 +15,8 @@ auth.json
 # OS / editor
 .vscode/
 .DS_Store
+node_modules/
+test-results/
+playwright-report/
+.env
+*.log
