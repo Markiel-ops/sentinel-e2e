@@ -74,26 +74,34 @@ UI-dependent or brittle test implementations.
 
 ### Install dependencies
 
+Install all required project dependencies using npm:
+
 ```
 `bash`
 `npm install`
 ```
+### Environment Configuration
+
+Create .env file at the project root with the following values:
 
 ```
 `.env`
-`BASE_URL=https://your-app-url`
-`VOYA_EMAIL=your-email`
-`VOYA_PASSWORD=your-password`
+BASE_URL=https://your-app-url
+VOYA_EMAIL=your-email
+VOYA_PASSWORD=your-password
 ```
 
 ### Run test locally
 
+Execute the Playwright test suite locally:
 ```
 `bash`
 `npx playwright test`
 ```
 
 ### View test report
+
+Open the HTML report generated after test execution:
 
 ```
 `bash`
