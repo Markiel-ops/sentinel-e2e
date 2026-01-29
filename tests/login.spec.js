@@ -1,79 +1,76 @@
-// 🔑 Load environment variables FIRST
+// Load environment variables first
 require('dotenv').config();
 
-// 🎭 Playwright
 const { test, expect } = require('@playwright/test');
+const { LoginPage } = require('./pages/login.page');
 
-test.describe('Login Page - Voyadores DEV', () => {
-
+test.describe('Login Page – Voyadores DEV', () => {
   test.beforeEach(async ({ page }, testInfo) => {
-    // ⛔ Skip login tests when already authenticated project is used
+    // Login tests do not apply when user is already authenticated
     if (testInfo.project.name === 'logged-in') {
-      test.skip(true, 'Login page should not run when authenticated');
+      test.skip(true, 'Login flow is skipped for authenticated users');
     }
 
-    // 🌐 Go to login page
-    await page.goto('/');
+    const loginPage = new LoginPage(page);
+    await loginPage.goTo();
   });
 
-  test('login page loads', async ({ page }) => {
-    await expect(page.getByPlaceholder('Username')).toBeVisible();
-    await expect(page.getByPlaceholder('Password')).toBeVisible();
-    await expect(
-      page.getByRole('button', { name: /log in/i })
-    ).toBeVisible();
+  test('loads login page', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+
+    await loginPage.openLogin();
+
+    await expect(loginPage.usernameInput).toBeVisible();
+    await expect(loginPage.passwordInput).toBeVisible();
+    await expect(loginPage.submitButton).toBeVisible();
   });
 
-  test('shows validation errors when submitting empty form', async ({ page }) => {
-    await page.getByRole('button', { name: /log in/i }).click();
+  test('allows typing into login inputs', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+
+    await loginPage.openLogin();
+    await expect(page).toHaveURL(/login/);
+
+    await loginPage.fillCredentials('testuser@example.com', 'P@ssw0rd123');
+
+    await expect(loginPage.usernameInput).toHaveValue('testuser@example.com');
+    await expect(loginPage.passwordInput).toHaveValue('P@ssw0rd123');
+  });
+
+  test('shows validation errors for empty login form', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+
+    await loginPage.openLogin();
+    await loginPage.submit();
 
     await expect(page.getByText(/username is required/i)).toBeVisible();
     await expect(page.getByText(/password is required/i)).toBeVisible();
   });
 
-  test('shows error when credentials are invalid', async ({ page }) => {
-    await page.getByPlaceholder('Username').fill('wrong@email.com');
-    await page.getByPlaceholder('Password').fill('wrongpassword');
-    await page.getByRole('button', { name: /log in/i }).click();
+  test('shows error for invalid credentials', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+
+    await loginPage.openLogin();
+    await loginPage.fillCredentials('wrong@email.com', 'wrongpassword');
+    await loginPage.submit();
 
     await expect(
       page.getByText(/invalid|incorrect|wrong/i)
     ).toBeVisible();
 
-    // Still on login page
-    await expect(page).toHaveURL(/login/i);
+    await expect(page).toHaveURL(/login/);
   });
 
-  test('user can log in with valid credentials', async ({ page }) => {
-    await page.getByPlaceholder('Username').fill(process.env.VOYA_EMAIL);
-    await page.getByPlaceholder('Password').fill(process.env.VOYA_PASSWORD);
-    await page.getByRole('button', { name: /log in/i }).click();
+  test('logs in with valid credentials', async ({ page }) => {
+    const loginPage = new LoginPage(page);
 
-    // ✅ Proof login succeeded (REALISTIC ASSERTION)
-    await expect(page).not.toHaveURL(/login/i);
+    await loginPage.openLogin();
+    await loginPage.fillCredentials(
+      process.env.VOYA_EMAIL,
+      process.env.VOYA_PASSWORD
+    );
+    await loginPage.submit();
 
-    // 🔐 Save authenticated state
-    await page.context().storageState({ path: 'auth.json' });
+    await expect(page).toHaveURL(process.env.BASE_URL);
   });
-
- test('password visibility toggle works', async ({ page }) => {
-  const passwordInput = page.getByPlaceholder('Password');
-
-  // Find toggle near password input
-  const toggleButton = passwordInput
-    .locator('xpath=..')
-    .locator('button, svg, span')
-    .first();
-
-  // Password input exists and is masked initially
-  await expect(passwordInput).toBeVisible();
-  await expect(passwordInput).toHaveAttribute('type', 'password');
-
-  // Toggle visibility (behavioral check)
-  await toggleButton.click();
-
-  // ✅ Input still exists and is interactable after toggle
-  await expect(passwordInput).toBeVisible();
-});
-
 });

@@ -1,11 +1,13 @@
-// 🔑 Load environment variables FIRST
+// Load environment variables FIRST
 require('dotenv').config();
 
-// 🎭 Playwright config helper
 const { defineConfig } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests',
+
+  // ✅ GLOBAL AUTH SETUP (HERE)
+  globalSetup: require.resolve('./global-setup.js'),
 
   timeout: 30 * 1000,
 
@@ -19,12 +21,14 @@ module.exports = defineConfig({
   projects: [
     {
       name: 'logged-out',
-      use: {},
+      use: {
+        storageState: undefined,
+      },
     },
     {
       name: 'logged-in',
       use: {
-        storageState: 'auth.json',
+        storageState: 'storageState.json',
       },
     },
   ],
