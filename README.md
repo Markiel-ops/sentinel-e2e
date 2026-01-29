@@ -74,12 +74,34 @@ UI-dependent or brittle test implementations.
 
 ### Install dependencies
 
-```bash
-npm install
+```
+`bash`
+`npm install`
+```
 
----
+```
+`.env`
+`BASE_URL=https://your-app-url`
+`VOYA_EMAIL=your-email`
+`VOYA_PASSWORD=your-password`
+```
 
-### Environment configuration
-### Run tests locally
+### Run test locally
+
+```
+`bash`
+`npx playwright test`
+```
+
 ### View test report
+
+```
+`bash`
+`npx playwright show-repot`
+```
+
+
+
+
+
 
