@@ -23,13 +23,13 @@ This project focuses on **stability, speed, and real-world auth handling**, not 
 This application uses **Single Sign-On (SSO)**.  
 Because credential entry is handled by an external Identity Provider:
 
-- We do **NOT** test username/password form validation
-- We do **NOT** depend on unstable login UI selectors
-- We validate **routing, access control, and session state**
+- I do **NOT** test username/password form validation
+- I do **NOT** depend on unstable login UI selectors
+- I validate **routing, access control, and session state**
 - Authentication is handled once via `globalSetup`
 - Tests reuse a stored authenticated session (`storageState`)
 
-This mirrors how enterprise QA teams test SSO applications.
+This approach aligns with common enterprise QA practices for testing SSO-based applications.
 
 ---
 
@@ -52,6 +52,6 @@ npx playwright test
 
 ```bash
 git add README.md
-git commit -m "docs: finalize README for CI-ready SSO automation framework"
+git commit -m "docs: update README"
 git push
 ```
