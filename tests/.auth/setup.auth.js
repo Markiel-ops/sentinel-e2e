@@ -1,6 +1,10 @@
-const { test, expect } = require('@playwright/test');
+const { chromium } = require('@playwright/test');
 
-test('global auth setup', async ({ page }) => {
+module.exports = async () => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
   await page.goto(process.env.VOYA_LOGIN_URL, {
     waitUntil: 'domcontentloaded',
   });
@@ -10,11 +14,20 @@ test('global auth setup', async ({ page }) => {
   await page.fill('input[type="password"]', process.env.VOYA_PASSWORD);
   await page.click('button[type="submit"]');
 
-  // Wait until redirected away from login
-  await page.waitForURL(/voyadores/, { timeout: 15000 });
+  // 🔐 IMPORTANT:
+  // Do NOT wait for URL (SSO may redirect / reload / crash page)
+  // Instead, wait until cookies/session exist
+  await page.waitForTimeout(3000);
+
+  const cookies = await context.cookies();
+  if (!cookies.length) {
+    throw new Error('Global auth failed: no session cookies found');
+  }
 
   // Save authenticated state
-  await page.context().storageState({
+  await context.storageState({
     path: 'storage/auth.json',
   });
-});
+
+  await browser.close();
+};
