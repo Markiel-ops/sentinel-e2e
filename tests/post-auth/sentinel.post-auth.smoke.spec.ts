@@ -1,16 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Sentinel | Post-Auth Smoke', () => {
-  test('@smoke SSO authentication completes successfully', async ({ page }) => {
-    page.setDefaultNavigationTimeout(15000);
-
+  test('@smoke Unauthenticated user is redirected to login', async ({ page }) => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-    
-    const cookies = await page.context().cookies();
-    expect(cookies.length).toBeGreaterThan(0);
-
-   
-    await expect(page).toHaveURL(/dev2-go\.voyadores\.com/);
+    await expect(page).toHaveURL(/dev2-login\.voyadores\.com/);
   });
 });

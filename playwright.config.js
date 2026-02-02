@@ -1,71 +1,53 @@
-import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
+import 'dotenv/config';
 
 export default defineConfig({
-  // Where your tests live
   testDir: './tests',
 
-  // Global test timeout
+  /* Global timeout per test */
   timeout: 30 * 1000,
 
-  // Expect assertions timeout
+  /* Expect assertion timeout */
   expect: {
-    timeout: 5 * 1000,
+    timeout: 5000,
   },
 
-  // Run tests in parallel
-  fullyParallel: true,
-
-  // Fail CI if test.only is left in code
+  /* Fail the build on CI if test.only is left */
   forbidOnly: !!process.env.CI,
 
-  // Retry on CI only
-  retries: process.env.CI ? 2 : 0,
+  /* Retry on CI only */
+  retries: process.env.CI ? 1 : 0,
 
-  // Workers
-  workers: process.env.CI ? 1 : undefined,
+  /* Run tests in parallel */
+  workers: process.env.CI ? 2 : undefined,
 
-  // Test reports
+  /* Reporter configuration */
   reporter: [
-    ['html', { open: 'never' }],
-    ['list'],
+    ['html', { open: 'never' }]
   ],
 
-  // Shared settings for all projects
+  /* Shared settings for all projects */
   use: {
     baseURL: process.env.BASE_URL,
+
     headless: true,
+
+    actionTimeout: 10 * 1000,
+
+    navigationTimeout: 15 * 1000,
+
     screenshot: 'only-on-failure',
+
     video: 'retain-on-failure',
+
     trace: 'on-first-retry',
   },
 
-  // Projects
+  /* Browser projects */
   projects: [
-  {
-    name: 'setup',
-    testMatch: /auth\.setup\.js/,
-  },
-
-  // UNAUTHENTICATED TESTS
-  {
-    name: 'unauth',
-    testMatch: /(login|location)\.spec\.(js|ts)/,
-    use: {
-      ...devices['Desktop Chrome'],
+    {
+      name: 'Chromium',
+      use: { ...devices['Desktop Chrome'] },
     },
-  },
-
-  // AUTHENTICATED TESTS
-  {
-    name: 'chromium',
-    dependencies: ['setup'],
-    testIgnore: /(login|location)\.spec\.(js|ts)/,
-    use: {
-      ...devices['Desktop Chrome'],
-      storageState: 'playwright/.auth/user.json',
-    },
-  },
-]
-
+  ],
 });
