@@ -10,9 +10,6 @@ It was intentionally designed and implemented to showcase clean automation struc
 Page Object Model usage, stable validations, and secure environment-based configuration
 for authentication workflows.
 
-
-
-
 ---
 
 ## Tech Stack
@@ -21,20 +18,17 @@ for authentication workflows.
 - Page Object Model (POM)
 - Environment-based configuration (`.env`)
 
-
 ---
 
 ## Test Coverage
-The test suite covers the core login flow of the application, including:
+The automation suite covers the core login flow of the application, including:
 
-- Valid user authentication
+- User authentication
 - Page navigation and URL validation during login
 - Post-login state verification
 
 Additional authentication and post-login scenarios are intentionally archived
-to maintain a focused and stable active test scope.
-
-
+to maintain a focused and stable active scope.
 
 ---
 
