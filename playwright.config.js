@@ -1,13 +1,9 @@
-import dotenv from 'dotenv';
-import { defineConfig, devices } from '@playwright/test';
+const { defineConfig } = require('@playwright/test');
 
-dotenv.config();
-
-export default defineConfig({
+module.exports = defineConfig({
   testDir: './tests',
-  fullyParallel: true,
-  retries: process.env.CI ? 1 : 0,
-  reporter: [['html', { open: 'never' }]],
+  timeout: 30 * 1000,
+  retries: 0,
 
   use: {
     baseURL: process.env.BASE_URL,
@@ -17,7 +13,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { browserName: 'chromium' },
     },
   ],
 });
