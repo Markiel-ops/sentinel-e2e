@@ -1,4 +1,4 @@
-name: Sentinel Smoke Tests
+name: Smoke – Login
 
 on:
   push:
