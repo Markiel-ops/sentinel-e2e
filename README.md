@@ -1,4 +1,5 @@
-![Sentinel Smoke Tests](https://github.com/Markiel-ops/sentinel-e2e/actions/workflows/sentinel-smoke.yml/badge.svg?branch=main)
+![Smoke Tests](https://github.com/Markiel-ops/sentinel-e2e/actions/workflows/sentinel-smoke.yml/badge.svg?branch=main)
+
 
 
 
