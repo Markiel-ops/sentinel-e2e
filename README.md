@@ -2,11 +2,15 @@
 
 # Sentinel E2E Automation (Playwright)
 
-This project demonstrates end-to-end (E2E) test automation for a login flow using Playwright.
+## Overview
 
-It is intentionally scoped as a portfolio-ready example that showcases clean test structure,
-Page Object Model usage, stable assertions, and secure environment-based configuration
-for authentication testing.
+This project demonstrates end-to-end (E2E) automation for a login flow using Playwright.
+
+It was intentionally designed and implemented to showcase clean automation structure,
+Page Object Model usage, stable validations, and secure environment-based configuration
+for authentication workflows.
+
+
 
 
 ---
@@ -20,18 +24,16 @@ for authentication testing.
 
 ---
 
-## Key Design Decisions
-
 ## Test Coverage
-
-The test suite currently covers the core login flow of the application, including:
+The test suite covers the core login flow of the application, including:
 
 - Valid user authentication
 - Page navigation and URL validation during login
 - Post-login state verification
 
 Additional authentication and post-login scenarios are intentionally archived
-to keep the active scope focused and stable.
+to maintain a focused and stable active test scope.
+
 
 
 ---
