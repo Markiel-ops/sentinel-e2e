@@ -13,16 +13,17 @@ for authentication workflows.
 ---
 
 ## Tech Stack
+- Playwright (TypeScript)
+- Node.js
+- Page Object Model (POM)
+- Environment-based configuration (`.env`)
 
 - Playwright (TypeScript)
 - Node.js
 - Page Object Model (POM)
 - Environment-based configuration (`.env`)
 
----
-
 ## Test Coverage
-
 The automation suite covers the core login flow of the application, including:
 
 - User authentication
@@ -47,7 +48,9 @@ sentinel-e2e/
 ├─ .env.example
 ├─ playwright.config.ts
 └─ README.md
+
 ```
+
 ---
 
 ## How to Run
