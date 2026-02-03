@@ -1,4 +1,6 @@
-![Playwright Tests](https://github.com/Markiel-ops/sentinel-e2e/actions/workflows/playwright.yml/badge.svg)
+![Sentinel Smoke Tests](https://github.com/Markiel-ops/sentinel-e2e/actions/workflows/sentinel-smoke.yml/badge.svg?branch=main)
+
+
 
 # Sentinel E2E Automation (Playwright)
 
